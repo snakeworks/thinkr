@@ -4,6 +4,7 @@ import 'package:thinkr/dashboard/dashboard_screen.dart';
 import 'package:thinkr/setup/login_screen.dart';
 import 'package:thinkr/utils/auth.dart';
 import 'package:thinkr/utils/routes.dart';
+import 'package:thinkr/utils/settings.dart';
 import 'package:thinkr/utils/storage_strings.dart';
 
 class BootScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _BootScreenState extends State<BootScreen> {
 
   void checkAuth() async {
     await Future.delayed(const Duration(seconds: 1));
-    
+
     final storage = FlutterSecureStorage();
     String? username = await storage.read(key: StorageStrings.username);
     String? password = await storage.read(key: StorageStrings.password);

@@ -33,7 +33,7 @@ class ThButton extends StatelessWidget {
                   strokeWidth: 2.5,
                 ),
               )
-              : Text(text, style: const TextStyle(color: Colors.white)),
+              : Text(text),
     );
   }
 }

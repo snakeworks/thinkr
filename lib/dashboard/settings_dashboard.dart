@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:thinkr/helper_widgets/th_button.dart';
+import 'package:thinkr/utils/settings.dart';
 import 'package:thinkr/utils/storage_strings.dart';
 
 class SettingsDashboard extends StatefulWidget {
@@ -13,12 +13,6 @@ class SettingsDashboard extends StatefulWidget {
 class _SettingsDashboardState extends State<SettingsDashboard> {
   bool _isLoading = false;
 
-  final Map<String, bool> _settings = {
-    StorageStrings.notifications: true,
-    StorageStrings.darkMode: false,
-    StorageStrings.locationAccess: false,
-  };
-
   @override
   void initState() {
     super.initState();
@@ -29,27 +23,16 @@ class _SettingsDashboardState extends State<SettingsDashboard> {
     setState(() {
       _isLoading = true;
     });
-    final storage = FlutterSecureStorage();
-    for (var key in _settings.keys) {
-      String? value = await storage.read(key: key);
-      _settings[key] = value != null ? bool.parse(value) : _settings[key]!;
-    }
+    await Settings.load();
     setState(() {
       _isLoading = false;
     });
   }
 
-  void _setOption(String key, bool value) async {
-    final storage = FlutterSecureStorage();
-
+  void _toggle(String key) {
     setState(() {
-      _settings[key] = !_settings[key]!;
+      Settings.toggle(key);
     });
-
-    await storage.write(
-      key: key,
-      value: _settings[key].toString(),
-    );
   }
 
   @override
@@ -61,23 +44,23 @@ class _SettingsDashboardState extends State<SettingsDashboard> {
           children: [
             SwitchListTile(
               title: const Text('Enable Notifications'),
-              value: _settings[StorageStrings.notifications] ?? false,
+              value: Settings.get(StorageStrings.notifications) ?? false,
               onChanged: (bool value) {
-                _setOption(StorageStrings.notifications, value);
+                _toggle(StorageStrings.notifications);
               },
             ),
             SwitchListTile(
               title: const Text('Dark Mode'),
-              value: _settings[StorageStrings.darkMode] ?? false,
+              value: Settings.get(StorageStrings.darkMode) ?? false,
               onChanged: (bool value) {
-                _setOption(StorageStrings.darkMode, value);
+                _toggle(StorageStrings.darkMode);
               },
             ),
             SwitchListTile(
               title: const Text('Location Access'),
-              value: _settings[StorageStrings.locationAccess] ?? false,
+              value: Settings.get(StorageStrings.locationAccess) ?? false,
               onChanged: (bool value) {
-                _setOption(StorageStrings.locationAccess, value);
+                _toggle(StorageStrings.locationAccess);
               },
             ),
             ListTile(

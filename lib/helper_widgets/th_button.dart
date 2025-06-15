@@ -6,10 +6,12 @@ class ThButton extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.isLoading = false,
+    this.iconData,
   });
 
   final String text;
   final void Function() onPressed;
+  final IconData? iconData;
   final bool isLoading;
 
   @override
@@ -22,7 +24,7 @@ class ThButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.0),
         ),
       ),
-      onPressed: onPressed,
+      onPressed: isLoading ? (){} : onPressed,
       child:
           isLoading
               ? const SizedBox(
@@ -33,7 +35,16 @@ class ThButton extends StatelessWidget {
                   strokeWidth: 2.5,
                 ),
               )
-              : Text(text),
+              : Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (iconData != null) ...[
+                    Icon(iconData, size: 20, color: Colors.white),
+                    const SizedBox(width: 8),
+                  ],
+                  Text(text),
+                ],
+              ),
     );
   }
 }

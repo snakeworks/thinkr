@@ -7,11 +7,11 @@ import 'package:thinkr/utils/storage_strings.dart';
 class Auth {
   static UserModel? currentUser;
   
-  static final String _usersApiUrl = "https://684e879bf0c9c9848d2860c1.mockapi.io/api/v1/users";
+  static final String usersApiUrl = "https://684e879bf0c9c9848d2860c1.mockapi.io/api/v1/users";
 
   static Future<bool> login(String username, String password) async {
     final storage = FlutterSecureStorage();
-    final response = await http.get(Uri.parse(_usersApiUrl));
+    final response = await http.get(Uri.parse(usersApiUrl));
     if (response.statusCode == 200) {
       final List users = json.decode(response.body);
       final user = users.firstWhere(

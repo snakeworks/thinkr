@@ -4,7 +4,6 @@ import 'package:thinkr/dashboard/dashboard_screen.dart';
 import 'package:thinkr/screens/login_screen.dart';
 import 'package:thinkr/utils/auth.dart';
 import 'package:thinkr/utils/routes.dart';
-import 'package:thinkr/utils/settings.dart';
 import 'package:thinkr/utils/storage_strings.dart';
 
 class BootScreen extends StatefulWidget {

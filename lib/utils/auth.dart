@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:thinkr/models/user_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:thinkr/utils/storage_strings.dart';
 
 class Auth {
   static UserModel? currentUser;
@@ -19,8 +20,8 @@ class Auth {
       );
       if (user != null) {
         currentUser = UserModel.fromMap(user);
-        await storage.write(key: 'username', value: username);
-        await storage.write(key: 'password', value: password);
+        await storage.write(key: StorageStrings.username, value: username);
+        await storage.write(key: StorageStrings.password, value: password);
         return true;
       } else {
         currentUser = null;
@@ -34,7 +35,7 @@ class Auth {
 
   static Future<void> logout() async {
     final storage = FlutterSecureStorage();
-    await storage.write(key: 'username', value: '');
-    await storage.write(key: 'password', value: '');
+    await storage.write(key: StorageStrings.username, value: '');
+    await storage.write(key: StorageStrings.password, value: '');
   }
 }

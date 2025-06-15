@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thinkr/dashboard/dashboard_screen.dart';
+import 'package:thinkr/setup/boot_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         primaryColor: Colors.deepPurple
       ),
-      home: DashboardScreen()
+      home: BootScreen()
     );
   }
 }

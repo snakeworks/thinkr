@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:thinkr/setup/boot_screen.dart';
+import 'package:thinkr/utils/auth.dart';
+import 'package:thinkr/utils/routes.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -8,6 +11,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  void _logout() async {
+    await Auth.logout();
+    if (!mounted) return;
+    Navigator.of(context).pushReplacement(
+      Routes.asDefault(BootScreen())
+    );
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,28 +26,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               radius: 48,
-              backgroundImage: AssetImage('assets/profile_placeholder.png'),
+              backgroundImage: NetworkImage(Auth.currentUser!.avatarUrl!),
             ),
             const SizedBox(height: 16),
-            const Text(
-              'Ivan Horvat',
+            Text(
+              Auth.currentUser!.fullName!,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'ivanhorvat@email.com',
+            Text(
+              Auth.currentUser!.username!,
               style: TextStyle(fontSize: 16, color: Colors.grey),
             ),
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+              children: [
                 Icon(Icons.location_on, size: 18, color: Colors.grey),
                 SizedBox(width: 8),
                 Text(
-                  'Rijeka, Croatia',
+                  '${Auth.currentUser!.country!}, ${Auth.currentUser!.city!}',
                   style: TextStyle(fontSize: 16, color: Colors.grey),
                 ),
               ],
@@ -45,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Logout'),
-              onTap: () {},
+              onTap: _logout,
             ),
           ],
         ),

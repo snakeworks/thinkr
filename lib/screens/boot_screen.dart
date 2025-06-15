@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:thinkr/dashboard/dashboard_screen.dart';
-import 'package:thinkr/setup/login_screen.dart';
+import 'package:thinkr/screens/login_screen.dart';
 import 'package:thinkr/utils/auth.dart';
 import 'package:thinkr/utils/routes.dart';
 import 'package:thinkr/utils/settings.dart';

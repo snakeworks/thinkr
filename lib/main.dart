@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thinkr/setup/boot_screen.dart';
+import 'package:thinkr/screens/boot_screen.dart';
 import 'package:thinkr/utils/settings.dart';
 import 'package:thinkr/utils/storage_strings.dart';
 
@@ -27,17 +27,6 @@ class _AppState extends State<App> {
     ),
     primaryColor: Colors.deepPurple,
     scaffoldBackgroundColor: Colors.grey[50],
-    appBarTheme: AppBarTheme(
-      backgroundColor: Colors.deepPurple,
-      elevation: 2,
-      iconTheme: IconThemeData(color: Colors.white),
-      titleTextStyle: TextStyle(
-        color: Colors.white,
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-        letterSpacing: 1.2,
-      ),
-    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.deepPurple,
@@ -56,17 +45,6 @@ class _AppState extends State<App> {
     ),
     primaryColor: Colors.deepPurple[200],
     scaffoldBackgroundColor: Colors.grey[900],
-    appBarTheme: AppBarTheme(
-      backgroundColor: Colors.deepPurple[700],
-      elevation: 2,
-      iconTheme: IconThemeData(color: Colors.white),
-      titleTextStyle: TextStyle(
-        color: Colors.white,
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-        letterSpacing: 1.2,
-      ),
-    ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.deepPurple[400],

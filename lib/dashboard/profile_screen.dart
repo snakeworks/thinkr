@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thinkr/setup/boot_screen.dart';
+import 'package:thinkr/screens/boot_screen.dart';
 import 'package:thinkr/utils/auth.dart';
 import 'package:thinkr/utils/routes.dart';
 

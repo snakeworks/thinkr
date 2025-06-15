@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thinkr/models/article_model.dart';
+import 'package:thinkr/screens/article_detail_screen.dart';
+import 'package:thinkr/utils/routes.dart';
 
 class ArticleCard extends StatelessWidget {
   const ArticleCard(this.data, {super.key});
@@ -11,7 +13,9 @@ class ArticleCard extends StatelessWidget {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: () {
-        // Handle card tap here
+        Navigator.of(context).push(
+          Routes.asDefault(ArticleDetailScreen(data))
+        );
       },
       child: SizedBox(
         width: double.infinity,

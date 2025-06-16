@@ -56,12 +56,12 @@ class _ArticleCardState extends State<ArticleCard> {
                       ),
                       child: Image.network(
                         widget.data.bannerUrl!,
-                        height: 140,
+                        height: 200,
                         width: double.infinity,
                         fit: BoxFit.cover,
                         errorBuilder:
                             (context, error, stackTrace) => SizedBox(
-                              height: 140,
+                              height: 200,
                               child: const Icon(Icons.image, size: 48),
                             ),
                       ),

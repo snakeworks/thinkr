@@ -71,6 +71,7 @@ class _AppState extends State<App> {
     return MaterialApp(
       title: 'Thinkr',
       theme: _isDarkMode ? _darkTheme : _lightTheme,
+      debugShowCheckedModeBanner: false,
       home: BootScreen(),
     );
   }

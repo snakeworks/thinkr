@@ -1,9 +1,7 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:thinkr/helper_widgets/th_button.dart';
 import 'package:thinkr/models/article_model.dart';
-import 'package:thinkr/utils/auth.dart';
+import 'package:thinkr/utils/api.dart';
 
 class ArticleDetailScreen extends StatefulWidget {
   const ArticleDetailScreen(this.data, {super.key});
@@ -22,26 +20,11 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
       _isTogglingFavorites = true;
     });
 
-    if (!_isFavorited()) {
-      Auth.currentUser!.favoritesIds!.add(widget.data.id);
-    } else {
-      Auth.currentUser!.favoritesIds!.remove(widget.data.id);
-    }
-
-    final url = Uri.parse('${Auth.usersApiUrl}/${Auth.currentUser!.id}');
-    await http.put(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'favoritesIds': Auth.currentUser!.favoritesIds}),
-    );
+    await API.toggleFavorite(widget.data);
 
     setState(() {
       _isTogglingFavorites = false;
     });
-  }
-
-  bool _isFavorited() {
-    return Auth.currentUser!.favoritesIds!.contains(widget.data.id);
   }
 
   @override
@@ -67,10 +50,13 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
               const SizedBox(height: 16),
               ThButton(
                 text:
-                    !_isFavorited()
-                        ? "Add To Favorites"
-                        : "Remove From Favorites",
-                iconData: Icons.favorite,
+                  !widget.data.isFavorited
+                      ? "Add To Favorites"
+                      : "Remove From Favorites",
+                iconData: 
+                  !widget.data.isFavorited
+                    ? Icons.favorite_border
+                    : Icons.favorite,
                 isLoading: _isTogglingFavorites,
                 onPressed: _toggleFavorites,
               ),

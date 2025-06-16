@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:thinkr/cards/article_card.dart';
+import 'package:thinkr/models/article_model.dart';
 import 'package:thinkr/screens/boot_screen.dart';
+import 'package:thinkr/utils/api.dart';
 import 'package:thinkr/utils/auth.dart';
 import 'package:thinkr/utils/routes.dart';
 
@@ -11,6 +14,14 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  late Future<List<ArticleModel>> _favoritesFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _favoritesFuture = API.fetchFavorites();
+  }
+  
   void _logout() async {
     final shouldLogout = await showDialog<bool>(
       context: context,
@@ -77,6 +88,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
               leading: const Icon(Icons.logout),
               title: const Text('Logout'),
               onTap: _logout,
+            ),
+            const SizedBox(height: 24),
+            Expanded(
+              child: FutureBuilder<List<ArticleModel>>(
+                future: _favoritesFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error loading articles'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(child: Text('No articles found'));
+                  }
+                  final articles = snapshot.data!;
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: articles.length,
+                    itemBuilder: (context, index) {
+                      return ArticleCard(articles[index]);
+                    },
+                  );
+                },
+              ),
             ),
           ],
         ),

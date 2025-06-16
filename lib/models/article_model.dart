@@ -1,3 +1,5 @@
+import 'package:thinkr/utils/auth.dart';
+
 class ArticleModel {
   const ArticleModel({
     this.id,
@@ -21,5 +23,9 @@ class ArticleModel {
       bannerUrl: map['bannerUrl'],
       createdAt: DateTime.tryParse(map['createdAt'] ?? ''),
     );
+  }
+
+  bool get isFavorited {
+    return Auth.currentUser!.favoritesIds!.contains(id);
   }
 }

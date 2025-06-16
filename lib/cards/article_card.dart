@@ -1,21 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:thinkr/models/article_model.dart';
 import 'package:thinkr/screens/article_detail_screen.dart';
+import 'package:thinkr/utils/api.dart';
 import 'package:thinkr/utils/routes.dart';
 
-class ArticleCard extends StatelessWidget {
+class ArticleCard extends StatefulWidget {
   const ArticleCard(this.data, {super.key});
 
   final ArticleModel data;
+
+  @override
+  State<ArticleCard> createState() => _ArticleCardState();
+}
+
+class _ArticleCardState extends State<ArticleCard> {
+  bool _isTogglingFavorites = false;
+
+  void _toggleFavorites() async {
+    setState(() {
+      _isTogglingFavorites = true;
+    });
+
+    await API.toggleFavorite(widget.data);
+
+    setState(() {
+      _isTogglingFavorites = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: () {
-        Navigator.of(context).push(
-          Routes.asDefault(ArticleDetailScreen(data))
-        );
+        Navigator.of(
+          context,
+        ).push(Routes.asDefault(ArticleDetailScreen(widget.data)));
       },
       child: SizedBox(
         width: double.infinity,
@@ -24,46 +44,81 @@ class ArticleCard extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Stack(
             children: [
-              Center(
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(12),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: ClipRRect(
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(12),
+                      ),
+                      child: Image.network(
+                        widget.data.bannerUrl!,
+                        height: 140,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                        errorBuilder:
+                            (context, error, stackTrace) => SizedBox(
+                              height: 140,
+                              child: const Icon(Icons.image, size: 48),
+                            ),
+                      ),
+                    ),
                   ),
-                  child: Image.network(
-                    data.bannerUrl!,
-                    height: 140,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    errorBuilder:
-                        (context, error, stackTrace) => SizedBox(
-                          height: 140,
-                          child: const Icon(Icons.image, size: 48),
-                        ),
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      widget.data.title!,
+                      style: Theme.of(context).textTheme.titleMedium,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: Text(
+                      'Published: ${_formatDate(widget.data.createdAt!)}',
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                ],
+              ),
+              Positioned(
+                top: 8,
+                right: 8,
+                child: Material(
+                  color: Colors.transparent,
+                  shape: const CircleBorder(),
+                  child:
+                      _isTogglingFavorites
+                          ? const SizedBox(
+                            width: 40,
+                            height: 40,
+                            child: Center(
+                              child: SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2.5,
+                                ),
+                              ),
+                            ),
+                          )
+                          : IconButton(
+                            icon:
+                                !widget.data.isFavorited
+                                    ? const Icon(Icons.favorite_border)
+                                    : const Icon(Icons.favorite),
+                            color: Theme.of(context).primaryColor,
+                            onPressed: _toggleFavorites,
+                          ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text(
-                  data.title!,
-                  style: Theme.of(context).textTheme.titleMedium,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                child: Text(
-                  'Published: ${_formatDate(data.createdAt!)}',
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
-                ),
-              ),
-              const SizedBox(height: 8),
             ],
           ),
         ),

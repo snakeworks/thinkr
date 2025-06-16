@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thinkr/dashboard/home_dashboard.dart';
 import 'package:thinkr/dashboard/profile_screen.dart';
+import 'package:thinkr/dashboard/quiz_dashboard.dart';
 import 'package:thinkr/dashboard/settings_dashboard.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -15,6 +16,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   static final List<Widget> _screens = <Widget>[
     HomeDashboard(),
+    QuizDashboard(),
     SettingsDashboard(),
     ProfileScreen()
   ];
@@ -24,10 +26,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Scaffold(
       body: _screens[_selectedBottomNavIndex],
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.quiz),
+            label: 'Quiz'
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

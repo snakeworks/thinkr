@@ -25,7 +25,7 @@ class QuizDashboard extends StatelessWidget {
                   );
                 },
                 child: Padding(
-                  padding: EdgeInsetsGeometry.all(16.0),
+                  padding: EdgeInsets.all(16.0),
                   child: Column(
                     children: [
                       Text(

@@ -24,24 +24,10 @@ class _SettingsDashboardState extends State<SettingsDashboard> {
       padding: const EdgeInsets.all(16),
       children: [
         SwitchListTile(
-          title: const Text('Enable Notifications'),
-          value: Settings.get(StorageStrings.notifications) ?? false,
-          onChanged: (bool value) {
-            _toggle(StorageStrings.notifications);
-          },
-        ),
-        SwitchListTile(
           title: const Text('Dark Mode'),
           value: Settings.get(StorageStrings.darkMode) ?? false,
           onChanged: (bool value) {
             _toggle(StorageStrings.darkMode);
-          },
-        ),
-        SwitchListTile(
-          title: const Text('Location Access'),
-          value: Settings.get(StorageStrings.locationAccess) ?? false,
-          onChanged: (bool value) {
-            _toggle(StorageStrings.locationAccess);
           },
         ),
         ListTile(

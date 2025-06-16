@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thinkr/helper_widgets/password_change_dialog.dart';
 import 'package:thinkr/helper_widgets/th_button.dart';
 import 'package:thinkr/utils/settings.dart';
 import 'package:thinkr/utils/storage_strings.dart';
@@ -45,7 +46,10 @@ class _SettingsDashboardState extends State<SettingsDashboard> {
         ),
         ListTile(
           title: const Text('Change Password'),
-          trailing: ThButton(onPressed: () {}, text: 'Change'),
+          trailing: ThButton(
+            onPressed: () { showPasswordChangeDialog(context); }, 
+            text: 'Change'
+          ),
         ),
       ],
     );

@@ -28,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoggingIn = false;
       _errorText = "";
     });
+    if (!mounted) return;
     if (result) {
       Navigator.of(context).pushReplacement(
         Routes.asDefault(
@@ -48,7 +49,16 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Image.asset(
+              "logo.png",
+              color:
+                Theme.of(context).brightness == Brightness.dark
+                  ? Colors.white
+                  : Colors.black
+            ),
+            const SizedBox(height: 16),
             TextField(
               controller: _usernameController,
               decoration: const InputDecoration(

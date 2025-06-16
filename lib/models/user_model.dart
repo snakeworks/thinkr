@@ -3,6 +3,7 @@ class UserModel {
     this.id,
     this.fullName,
     this.username,
+    this.password,
     this.avatarUrl,
     this.city,
     this.country,
@@ -13,6 +14,7 @@ class UserModel {
   final String? id;
   final String? fullName;
   final String? username;
+  final String? password;
   final String? avatarUrl;
   final String? city;
   final String? country;
@@ -24,6 +26,7 @@ class UserModel {
       id: map['id'],
       fullName: map['fullName'],
       username: map['username'],
+      password: map['password'],
       avatarUrl: map['avatar'],
       city: map['city'],
       country: map['country'],

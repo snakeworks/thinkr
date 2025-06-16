@@ -10,6 +10,27 @@ class Auth {
   static final String usersApiUrl = "https://684e879bf0c9c9848d2860c1.mockapi.io/api/v1/users";
 
   static Future<bool> login(String username, String password) async {
+    await fetchCurrentUser(username, password);
+    return currentUser != null;
+  }
+
+  static Future<void> logout() async {
+    final storage = FlutterSecureStorage();
+    await storage.write(key: StorageStrings.username, value: '');
+    await storage.write(key: StorageStrings.password, value: '');
+  }
+
+  static Future<void> setPassword(String password) async {
+    final url = Uri.parse('${Auth.usersApiUrl}/${Auth.currentUser!.id}');
+    await http.put(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'password': password}),
+    );
+    await fetchCurrentUser(Auth.currentUser!.username!, password);
+  }
+
+  static Future<void> fetchCurrentUser(String username, String password) async {
     final storage = FlutterSecureStorage();
     final response = await http.get(Uri.parse(usersApiUrl));
     if (response.statusCode == 200) {
@@ -22,20 +43,7 @@ class Auth {
         currentUser = UserModel.fromMap(user);
         await storage.write(key: StorageStrings.username, value: username);
         await storage.write(key: StorageStrings.password, value: password);
-        return true;
-      } else {
-        currentUser = null;
-        return false;
       }
-    } else {
-      currentUser = null;
-      return false;
     }
-  }
-
-  static Future<void> logout() async {
-    final storage = FlutterSecureStorage();
-    await storage.write(key: StorageStrings.username, value: '');
-    await storage.write(key: StorageStrings.password, value: '');
   }
 }

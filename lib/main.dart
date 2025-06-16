@@ -34,6 +34,9 @@ class _AppState extends State<App> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         textStyle: TextStyle(fontWeight: FontWeight.bold),
       ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder()     
     )
   );
 
@@ -52,6 +55,9 @@ class _AppState extends State<App> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         textStyle: TextStyle(fontWeight: FontWeight.bold),
       ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder()     
     )
   );
 

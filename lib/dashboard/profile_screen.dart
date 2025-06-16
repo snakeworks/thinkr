@@ -75,8 +75,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Icon(Icons.star, size: 18, color: Colors.grey),
+                const SizedBox(width: 8),
+                Text(
+                  '${Auth.currentUser!.quizStars!}',
+                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+                const SizedBox(width: 24),
                 Icon(Icons.location_on, size: 18, color: Colors.grey),
-                SizedBox(width: 8),
+                const SizedBox(width: 8),
                 Text(
                   '${Auth.currentUser!.country!}, ${Auth.currentUser!.city!}',
                   style: TextStyle(fontSize: 16, color: Colors.grey),

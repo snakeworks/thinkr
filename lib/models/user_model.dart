@@ -8,7 +8,8 @@ class UserModel {
     this.city,
     this.country,
     this.createdAt,
-    this.favoritesIds
+    this.favoritesIds,
+    this.quizStars
   });
 
   final String? id;
@@ -20,6 +21,7 @@ class UserModel {
   final String? country;
   final DateTime? createdAt;
   final List<dynamic>? favoritesIds;
+  final int? quizStars;
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
@@ -31,7 +33,8 @@ class UserModel {
       city: map['city'],
       country: map['country'],
       createdAt: DateTime.tryParse(map['createdAt'] ?? ''),
-      favoritesIds: map['favoritesIds'] ?? []
+      favoritesIds: map['favoritesIds'] ?? [],
+      quizStars: map['quizStars'] ?? 0
     );
   }
 }

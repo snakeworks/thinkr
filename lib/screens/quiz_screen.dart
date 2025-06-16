@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thinkr/utils/api.dart';
 import 'package:thinkr/utils/quiz_questions.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -26,6 +27,9 @@ class _QuizScreenState extends State<QuizScreen> {
     }
     setState(() {
       _currentQuestionIndex++;
+      if (_isFinished()) {
+        API.addQuizStars(_points);
+      }
     });
   }
 

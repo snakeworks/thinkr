@@ -44,4 +44,14 @@ class API {
       body: jsonEncode({'favoritesIds': Auth.currentUser!.favoritesIds}),
     );
   }
+
+  static Future<void> addQuizStars(int stars) async {
+    final url = Uri.parse('${Auth.usersApiUrl}/${Auth.currentUser!.id}');
+    await http.put(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({'quizStars': (Auth.currentUser!.quizStars! + stars)}),
+    );
+    await Auth.fetchCurrentUser(Auth.currentUser!.username!, Auth.currentUser!.password!);
+  }
 }
